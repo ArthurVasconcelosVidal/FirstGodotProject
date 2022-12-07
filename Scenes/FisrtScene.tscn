@@ -1,0 +1,16 @@
+[gd_scene load_steps=4 format=2]
+
+[ext_resource path="res://Scripts/Player/PlayerMovement.gd" type="Script" id=1]
+[ext_resource path="res://Scripts/Player/PlayerManager.gd" type="Script" id=2]
+[ext_resource path="res://Scripts/Player/InputSystem.gd" type="Script" id=3]
+
+[node name="FisrtScene" type="Spatial"]
+
+[node name="Player" type="Node" parent="."]
+script = ExtResource( 2 )
+
+[node name="InputSystem" type="Node" parent="Player"]
+script = ExtResource( 3 )
+
+[node name="MovementBehaviour" type="Node" parent="Player"]
+script = ExtResource( 1 )
