@@ -14,3 +14,6 @@ script = ExtResource( 3 )
 
 [node name="MovementBehaviour" type="Node" parent="Player"]
 script = ExtResource( 1 )
+
+[connection signal="SouthButton_Pressed" from="Player/InputSystem" to="Player/MovementBehaviour" method="_on_InputSystem_SouthButton_Pressed"]
+[connection signal="SouthButton_Released" from="Player/InputSystem" to="Player/MovementBehaviour" method="_on_InputSystem_SouthButton_Released"]

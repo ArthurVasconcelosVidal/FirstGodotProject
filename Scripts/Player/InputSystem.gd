@@ -9,9 +9,13 @@ onready var playerManager = get_parent()
 var stickValue = Vector2.ZERO
 var sitckMagnitude = 0.0
 
+signal SouthButton_Pressed()
+signal SouthButton_Released()
+
 # Called when the node enters the scene tree for the first time.
 func _input(event):
 	StickBehaviour()
+	ButtonConfig()
 	
 func StickBehaviour():
 	var stick = Vector2.ZERO
@@ -38,3 +42,9 @@ func StickBehaviour():
 	stickStrenght = stickStrenght.clamped(1)
 	sitckMagnitude = stickStrenght.length()
 	stickValue = stick.normalized()
+
+func ButtonConfig():
+	if Input.is_action_just_pressed("southButton"):
+		emit_signal("SouthButton_Pressed")
+	elif Input.is_action_just_released("southButton"):
+		emit_signal("SouthButton_Released")

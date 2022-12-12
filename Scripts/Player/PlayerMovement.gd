@@ -13,6 +13,13 @@ func _ready():
 
 # Called every frame. 'delta' is the elapsed time since the previous frame.
 func _process(delta):
-	print(playerManager.inputNode.stickValue)
-	print(playerManager.inputNode.sitckMagnitude)
+	#print(playerManager.inputNode.stickValue)
+	#print(playerManager.inputNode.sitckMagnitude)
 	pass
+
+func _on_InputSystem_SouthButton_Pressed():
+	print("Q Pressed")
+
+
+func _on_InputSystem_SouthButton_Released():
+	print("Q Releassed")
