@@ -1,39 +1,61 @@
-[gd_scene load_steps=5 format=2]
+[gd_scene load_steps=8 format=2]
 
 [ext_resource path="res://Scripts/Player/PlayerMovement.gd" type="Script" id=1]
 [ext_resource path="res://Scripts/Player/PlayerManager.gd" type="Script" id=2]
 [ext_resource path="res://Scripts/Player/InputSystem.gd" type="Script" id=3]
 [ext_resource path="res://Materials/BlackMat.tres" type="Material" id=4]
+[ext_resource path="res://Scripts/addons/zylann.debug_draw/debug_draw.gd" type="Script" id=5]
+
+[sub_resource type="CapsuleShape" id=1]
+
+[sub_resource type="SpatialMaterial" id=2]
+albedo_color = Color( 0.686275, 0.0627451, 0.0627451, 1 )
 
 [node name="FisrtScene" type="Spatial"]
-
-[node name="Player" type="Node" parent="."]
-script = ExtResource( 2 )
-
-[node name="InputSystem" type="Node" parent="Player"]
-script = ExtResource( 3 )
-
-[node name="MovementBehaviour" type="Node" parent="Player"]
-script = ExtResource( 1 )
-
-[node name="RigidBody" type="RigidBody" parent="Player"]
-
-[node name="MeshNode" type="Node" parent="Player"]
-
-[node name="CSGCylinder" type="CSGCylinder" parent="Player/MeshNode"]
-height = 2.5
-sides = 15
 
 [node name="Level" type="Node" parent="."]
 
 [node name="CSGBox" type="CSGBox" parent="Level"]
 transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0.0792446, -1.90735e-06, -0.0584183 )
 material_override = ExtResource( 4 )
+use_collision = true
 width = 68.2652
 depth = 49.3768
 
 [node name="DirectionalLight" type="DirectionalLight" parent="Level"]
 transform = Transform( 1, 0, 0, 0, 0.183951, 0.982935, 0, -0.982935, 0.183951, 0, 33.21, 0 )
 
-[connection signal="SouthButton_Pressed" from="Player/InputSystem" to="Player/MovementBehaviour" method="_on_InputSystem_SouthButton_Pressed"]
-[connection signal="SouthButton_Released" from="Player/InputSystem" to="Player/MovementBehaviour" method="_on_InputSystem_SouthButton_Released"]
+[node name="PlayerNode" type="RigidBody" parent="."]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 3.54965, 0 )
+script = ExtResource( 2 )
+
+[node name="CollisionShape" type="CollisionShape" parent="PlayerNode"]
+transform = Transform( 1, 0, 0, 0, -4.37114e-08, -1, 0, 1, -4.37114e-08, 0, 0, 0 )
+shape = SubResource( 1 )
+
+[node name="Camera" type="Camera" parent="PlayerNode"]
+transform = Transform( -1, -6.18173e-08, 6.18173e-08, 0, 0.707107, 0.707107, -8.74228e-08, 0.707107, -0.707107, 0, 5, -5 )
+
+[node name="InputSystem" type="Node" parent="PlayerNode"]
+script = ExtResource( 3 )
+
+[node name="MovementBehaviour" type="Node" parent="PlayerNode"]
+script = ExtResource( 1 )
+
+[node name="MeshNode" type="Spatial" parent="PlayerNode"]
+
+[node name="CSGBox" type="CSGBox" parent="PlayerNode/MeshNode"]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.00865, 0.489686 )
+material_override = SubResource( 2 )
+height = 0.5
+depth = 1.0
+
+[node name="CSGCylinder" type="CSGCylinder" parent="PlayerNode/MeshNode"]
+height = 2.5
+sides = 15
+
+[node name="DrawDebugNode" type="CanvasLayer" parent="PlayerNode"]
+script = ExtResource( 5 )
+
+[connection signal="SouthButton_Pressed" from="PlayerNode/InputSystem" to="PlayerNode/MovementBehaviour" method="_on_InputSystem_SouthButton_Pressed"]
+[connection signal="SouthButton_Released" from="PlayerNode/InputSystem" to="PlayerNode/MovementBehaviour" method="_on_InputSystem_SouthButton_Released"]
